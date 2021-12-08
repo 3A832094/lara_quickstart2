@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Task;
 
 class TaskController extends Controller
 {
@@ -17,7 +18,14 @@ class TaskController extends Controller
     }
     public function index(Request $request)
     {
-        return view('tasks.index');
+        $tasks = Task::where('user_id', $request->user()->id)->get();
+        //$tasks= auth()->user()->tasks;
+        //$tasks= auth()->user()->tasks()->get();
+        //$tasks=Auth::user()->tasks;
+        //$tasks=Auth::user()->tasks()->get();
+        return view('tasks.index', [
+            'tasks' => $tasks,
+        ]);
     }
     public function store(Request $request)
     {
@@ -32,4 +40,5 @@ class TaskController extends Controller
         //auth()->user()->tasks()->create($request->all());
         return redirect('/tasks');
     }
+
 }
