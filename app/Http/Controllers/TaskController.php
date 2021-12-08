@@ -40,5 +40,12 @@ class TaskController extends Controller
         //auth()->user()->tasks()->create($request->all());
         return redirect('/tasks');
     }
+    public function destroy(Request $request, Task $task)
+    {
+        //$this->authorize('destroy', $task);
 
+        $task->delete();
+
+        return redirect('/tasks');
+    }
 }
